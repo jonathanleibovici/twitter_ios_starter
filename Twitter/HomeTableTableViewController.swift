@@ -26,8 +26,16 @@ class HomeTableTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 150
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        //always call the super class if it needs to do somthing
+        super.viewDidAppear(animated)
+        self.loadTweets()
+       // self.tableView.refreshControl = myRefreshControl
+        
+    }
     
     @objc func loadTweets(){
         
@@ -111,8 +119,10 @@ class HomeTableTableViewController: UITableViewController {
             cell.profileImageView.image = UIImage(data: imageData)
         }
         
-        
-        
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"]as!Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"]  as! Int
+        cell.setRetweeted (tweetArray[indexPath.row]["retweeted"] as! Bool)
+        cell.isRetweeted = (tweetArray[indexPath.row]["retweeted"] as! Bool)
         return cell
     }
     
